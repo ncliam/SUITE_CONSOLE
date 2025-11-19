@@ -1,6 +1,7 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { useAuthStore } from '@/stores/authStore'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +14,19 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 export function ProfileDropdown() {
+  const { auth } = useAuthStore()
+  const navigate = useNavigate()
+  const user = auth.user
+  const signOut = auth.signOut
+
+  if (!user) return null;
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
           <Avatar className='h-8 w-8'>
-            <AvatarImage src='/avatars/01.png' alt='@shadcn' />
+            <AvatarImage src={user.avatar} alt={user.name} />
             <AvatarFallback>NC</AvatarFallback>
           </Avatar>
         </Button>
@@ -26,9 +34,9 @@ export function ProfileDropdown() {
       <DropdownMenuContent className='w-56' align='end' forceMount>
         <DropdownMenuLabel className='font-normal'>
           <div className='flex flex-col space-y-1'>
-            <p className='text-sm leading-none font-medium'>ncliam</p>
+            <p className='text-sm leading-none font-medium'>{user.name}</p>
             <p className='text-muted-foreground text-xs leading-none'>
-              ncliam@gmail.com
+              {user.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -55,7 +63,18 @@ export function ProfileDropdown() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+              onClick={async () => {
+                try {
+                  if (signOut) await signOut()
+                } catch (err) {
+                  // eslint-disable-next-line no-console
+                  console.error('Sign out failed', err)
+                } finally {
+                  navigate({ to: '/sign-in-2' })
+                }
+              }}
+            >
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
