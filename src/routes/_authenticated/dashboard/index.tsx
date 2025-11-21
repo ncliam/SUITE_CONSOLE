@@ -1,8 +1,15 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import { getDefaultStore } from 'jotai'
+import { activeAppState } from '@/stores/applicationStore'
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
   beforeLoad: async () => {
-    // Redirect to /apps if no appId param provided
-    throw redirect({ to: '/apps' })
+    const store = getDefaultStore()
+    const active = store.get(activeAppState)
+
+    if (!active) {
+      // No active app selected — redirect to apps list
+      throw redirect({ to: '/apps' })
+    }
   },
 })
