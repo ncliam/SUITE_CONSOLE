@@ -1,67 +1,52 @@
-import { Link } from '@tanstack/react-router'
-import { IconMenu } from '@tabler/icons-react'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { Link, useLocation } from '@tanstack/react-router'
+import { IconChevronRight } from '@tabler/icons-react'
+import { useAtomValue } from 'jotai'
+import { activeAppState } from '@/stores/applicationStore'
 
-interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
-  links: {
-    title: string
-    href: string
-    isActive: boolean
-    disabled?: boolean
-  }[]
-}
+const navItems = [
+  {
+    title: 'Overview',
+    href: '/dashboard',
+    path: '/dashboard',
+  },
+  {
+    title: 'Users',
+    href: '/users',
+    path: '/users',
+  },
+  {
+    title: 'Settings',
+    href: '/settings',
+    path: '/settings',
+  },
+]
 
-export function TopNav({ className, links, ...props }: TopNavProps) {
+export function TopNav() {
+  const activeApp = useAtomValue(activeAppState)
+  const location = useLocation()
+  
+  // Find current page title based on pathname
+  const currentItem = navItems.find(item => location.pathname.includes(item.path))
+  const currentTitle = currentItem?.title || 'Dashboard'
+
   return (
-    <>
-      <div className='md:hidden'>
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Button size='icon' variant='outline'>
-              <IconMenu />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side='bottom' align='start'>
-            {links.map(({ title, href, isActive, disabled }) => (
-              <DropdownMenuItem key={`${title}-${href}`} asChild>
-                <Link
-                  to={href}
-                  className={!isActive ? 'text-muted-foreground' : ''}
-                  disabled={disabled}
-                >
-                  {title}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-
-      <nav
-        className={cn(
-          'hidden items-center space-x-4 md:flex lg:space-x-6',
-          className
-        )}
-        {...props}
+    <div className='flex items-center space-x-2 text-sm'>
+      {/* Root: Active App Name (clickable to go back to /apps) */}
+      <Link
+        to='/dashboard'
+        className='font-semibold text-foreground hover:text-primary transition-colors cursor-pointer'
       >
-        {links.map(({ title, href, isActive, disabled }) => (
-          <Link
-            key={`${title}-${href}`}
-            to={href}
-            disabled={disabled}
-            className={`hover:text-primary text-sm font-medium transition-colors ${isActive ? '' : 'text-muted-foreground'}`}
-          >
-            {title}
-          </Link>
-        ))}
-      </nav>
-    </>
+        {activeApp?.name || 'Apps'}
+      </Link>
+
+      {/* Breadcrumb separator */}
+      <IconChevronRight size={16} className='text-muted-foreground' />
+
+      {/* Current page title */}
+      <span className='text-muted-foreground'>
+        {currentTitle}
+      </span>
+      
+    </div>
   )
 }

@@ -15,19 +15,15 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
-import { useAtomValue } from 'jotai'
-import { activeAppState } from '@/stores/applicationStore'
-import { useNavigate } from '@tanstack/react-router'
+
 
 export default function Dashboard() {
-  const activeApp = useAtomValue(activeAppState);
-  const navigate = useNavigate()
-  if (!activeApp) navigate({ to: '/apps' })
+  
   return (
     <>
       {/* ===== Top Heading ===== */}
       <Header>
-        <TopNav links={topNav} />
+        <TopNav />
         <div className='ml-auto flex items-center space-x-4'>
           <Search />
           <ThemeSwitch />
@@ -39,7 +35,7 @@ export default function Dashboard() {
       <Main>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <h1 className='text-2xl font-bold tracking-tight'>
-            {activeApp?.name}
+            Dashboard
           </h1>
           <div className='flex items-center space-x-2'>
             <Button>Download</Button>
@@ -195,24 +191,3 @@ export default function Dashboard() {
     </>
   )
 }
-
-const topNav = [
-  {
-    title: 'Overview',
-    href: '/overview',
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: 'Users',
-    href: '/users',
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: 'Settings',
-    href: '/settings',
-    isActive: true,
-    disabled: false,
-  },
-]
