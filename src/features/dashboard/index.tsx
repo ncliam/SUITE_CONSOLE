@@ -15,8 +15,11 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
+import { useAtomValue } from 'jotai'
+import { activeAppState } from '@/stores/applicationStore'
 
 export default function Dashboard() {
+  const activeApp = useAtomValue(activeAppState)
   return (
     <>
       {/* ===== Top Heading ===== */}
@@ -32,7 +35,9 @@ export default function Dashboard() {
       {/* ===== Main ===== */}
       <Main>
         <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>
+            {activeApp?.name}
+          </h1>
           <div className='flex items-center space-x-2'>
             <Button>Download</Button>
           </div>

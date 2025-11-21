@@ -29,3 +29,5 @@ export const appsState = atom(async () => {
   const data = await requestWithFallback<SuiteApp[]>('/apps', [])
   return data
 })
+
+export const activeAppState = atom<SuiteApp | null>(null)

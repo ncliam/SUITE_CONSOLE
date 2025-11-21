@@ -21,6 +21,7 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { appsState } from '@/stores/applicationStore'
 import { useAtomValue } from 'jotai'
+import { useNavigate } from '@tanstack/react-router'
 
 const appText = new Map<string, string>([
   ['all', 'All Apps'],
@@ -30,6 +31,7 @@ const appText = new Map<string, string>([
 
 export default function Apps() {
   const apps = useAtomValue(appsState)
+  const navigate = useNavigate()
   const [sort, setSort] = useState('ascending')
   const [appType, setAppType] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
@@ -116,7 +118,7 @@ export default function Apps() {
         <ul className='faded-bottom no-scrollbar grid gap-4 overflow-auto pt-4 pb-16 md:grid-cols-2 lg:grid-cols-3'>
           {filteredApps.map((app) => (
             <li
-              key={app.name}
+              key={app.id}
               className='rounded-lg border p-4 hover:shadow-md'
             >
               <div className='mb-8 flex items-center justify-between'>
@@ -129,6 +131,9 @@ export default function Apps() {
                   variant='outline'
                   size='sm'
                   className={`${app.connected ? 'border border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950 dark:hover:bg-blue-900' : ''}`}
+                  onClick={() => {
+                    navigate({ to: `/dashboard/${app.id}` })
+                  }}
                 >
                   {app.connected ? 'Connected' : 'Connect'}
                 </Button>
