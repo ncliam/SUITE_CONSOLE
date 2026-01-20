@@ -12,6 +12,7 @@ export interface AuthUser {
   role: string[]
   avatar?: string
   exp: number
+  // Team role is now determined by team-members.json based on email
 }
 
 // Initialize user from localStorage

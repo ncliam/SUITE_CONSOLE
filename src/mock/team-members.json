@@ -1,0 +1,46 @@
+[
+  {
+    "id": "mem_001",
+    "teamId": "cDqxppoPoYHm6XKsKvlG",
+    "userId": "user_001",
+    "email": "ncliam@gmail.com",
+    "displayName": "Liem Nguyen",
+    "photoURL": "https://i.pravatar.cc/150?u=ncliam@gmail.com",
+    "role": "owner",
+    "status": "active",
+    "joinedAt": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "mem_002",
+    "teamId": "cDqxppoPoYHm6XKsKvlG",
+    "userId": "user_002",
+    "email": "billing@suitecloud.vn",
+    "displayName": "Trần Thị B",
+    "photoURL": "https://i.pravatar.cc/150?u=billing@suitecloud.vn",
+    "role": "billing_admin",
+    "status": "active",
+    "joinedAt": "2025-01-05T00:00:00Z"
+  },
+  {
+    "id": "mem_003",
+    "teamId": "cDqxppoPoYHm6XKsKvlG",
+    "userId": "user_003",
+    "email": "user@suitecloud.vn",
+    "displayName": "Lê Văn C",
+    "photoURL": "https://i.pravatar.cc/150?u=user@suitecloud.vn",
+    "role": "member",
+    "status": "active",
+    "joinedAt": "2025-01-10T00:00:00Z"
+  },
+  {
+    "id": "mem_004",
+    "teamId": "team_002",
+    "userId": "user_001",
+    "email": "ncliam@gmail.com",
+    "displayName": "Liem Nguyen",
+    "photoURL": "https://i.pravatar.cc/150?u=ncliam@gmail.com",
+    "role": "owner",
+    "status": "active",
+    "joinedAt": "2026-01-05T00:00:00Z"
+  }
+]

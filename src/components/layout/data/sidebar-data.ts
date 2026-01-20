@@ -1,8 +1,10 @@
 import {
   IconBarrierBlock,
   IconBrowserCheck,
+  IconBuilding,
   IconBug,
   IconChecklist,
+  IconCreditCard,
   IconError404,
   IconHelp,
   IconLayoutDashboard,
@@ -27,16 +29,21 @@ export const sidebarData: SidebarData = {
     {
       title: 'General',
       items: [
-        
+
         {
           title: 'Apps',
           url: '/',
           icon: IconPackages,
         },
         {
+          title: 'Team',
+          url: '/team/settings',
+          icon: IconUsers,
+        },
+        {
           title: 'Billing',
-          url: '/tasks',
-          icon: IconChecklist,
+          url: '/billing',
+          icon: IconCreditCard,
         },
       ],
     },

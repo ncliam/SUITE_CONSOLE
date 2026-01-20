@@ -15,7 +15,8 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 import { useAtomValue } from 'jotai'
-import { teamsState, Team } from '@/stores/applicationStore'
+import { teamsState } from '@/stores/applicationStore'
+import type { Team } from '@/types/team'
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()

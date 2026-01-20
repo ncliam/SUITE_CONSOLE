@@ -1,0 +1,35 @@
+[
+  {
+    "id": "sub_001",
+    "teamId": "cDqxppoPoYHm6XKsKvlG",
+    "appCode": "com.cev.wms",
+    "status": "active",
+    "billingCycle": "monthly",
+    "currentPeriodStart": "2026-01-01T00:00:00Z",
+    "currentPeriodEnd": "2026-01-31T23:59:59Z",
+    "cancelAtPeriodEnd": false,
+    "subscribedAt": "2025-12-15T00:00:00Z"
+  },
+  {
+    "id": "sub_002",
+    "teamId": "cDqxppoPoYHm6XKsKvlG",
+    "appCode": "com.cev.ams",
+    "status": "active",
+    "billingCycle": "monthly",
+    "currentPeriodStart": "2026-01-01T00:00:00Z",
+    "currentPeriodEnd": "2026-01-31T23:59:59Z",
+    "cancelAtPeriodEnd": false,
+    "subscribedAt": "2025-12-20T00:00:00Z"
+  },
+  {
+    "id": "sub_003",
+    "teamId": "cDqxppoPoYHm6XKsKvlG",
+    "appCode": "com.cev.tms",
+    "status": "trial",
+    "billingCycle": "monthly",
+    "currentPeriodStart": "2026-01-05T00:00:00Z",
+    "currentPeriodEnd": "2026-01-20T23:59:59Z",
+    "cancelAtPeriodEnd": false,
+    "subscribedAt": "2026-01-05T00:00:00Z"
+  }
+]

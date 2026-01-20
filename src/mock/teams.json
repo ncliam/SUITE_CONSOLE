@@ -1,10 +1,33 @@
 [
-    {
-        "name": "Suite Cloud Vietnam",
-        "owner": "ncliam@gmail.com",
-        "create_at": null,
-        "updated_at": null,
-        "id": "cDqxppoPoYHm6XKsKvlG",
-        "key": "teams/cDqxppoPoYHm6XKsKvlG"
-    }
+  {
+    "id": "cDqxppoPoYHm6XKsKvlG",
+    "name": "Suite Cloud Vietnam",
+    "owner": "ncliam@gmail.com",
+    "verified": true,
+    "logo": "https://placehold.co/100x100/png",
+    "status": "active",
+    "billingEmail": "billing@suitecloud.vn",
+    "taxId": "0123456789",
+    "address": {
+      "street": "123 Đường Nguyễn Huệ",
+      "city": "Quận 1",
+      "province": "TP. Hồ Chí Minh",
+      "postalCode": "700000",
+      "country": "VN"
+    },
+    "createdAt": "2025-01-01T00:00:00Z",
+    "updatedAt": "2026-01-05T10:00:00Z",
+    "key": "teams/cDqxppoPoYHm6XKsKvlG"
+  },
+  {
+    "id": "team_002",
+    "name": "Startup ABC",
+    "owner": "ncliam@gmail.com",
+    "verified": false,
+    "status": "pending_verification",
+    "billingEmail": "contact@startup-abc.com",
+    "createdAt": "2026-01-05T00:00:00Z",
+    "updatedAt": "2026-01-05T00:00:00Z",
+    "key": "teams/team_002"
+  }
 ]
