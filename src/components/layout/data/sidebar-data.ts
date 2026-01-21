@@ -1,25 +1,9 @@
 import {
-  IconBarrierBlock,
-  IconBrowserCheck,
-  IconBuilding,
-  IconBug,
-  IconChecklist,
   IconCreditCard,
-  IconError404,
   IconHelp,
   IconLayoutDashboard,
-  IconLock,
-  IconLockAccess,
-  IconMessages,
-  IconNotification,
   IconPackages,
-  IconPalette,
-  IconServerOff,
-  IconSettings,
-  IconTool,
   IconUserCog,
-  IconUserOff,
-  IconUsers,
 } from '@tabler/icons-react'
 import { type SidebarData } from '../types'
 
@@ -34,11 +18,6 @@ export const sidebarData: SidebarData = {
           title: 'Apps',
           url: '/',
           icon: IconPackages,
-        },
-        {
-          title: 'Team',
-          url: '/team/settings',
-          icon: IconUsers,
         },
         {
           title: 'Billing',

@@ -12,11 +12,28 @@ export interface SuiteApp {
   logo?: string;
 }
 
-
-export const teamsState = atom(async () => {
+// Original teams từ server (read-only)
+export const originalTeamsState = atom(async () => {
   const data = await requestWithFallback<Team[]>('/teams', [])
   return data
 })
+
+// Local teams state (mutable) - initialized from original
+export const localTeamsAtom = atom<Team[]>([])
+
+// Combined teams state - uses local if available, otherwise original
+export const teamsState = atom(
+  async (get) => {
+    const localTeams = get(localTeamsAtom)
+    if (localTeams.length > 0) {
+      return localTeams
+    }
+    return await get(originalTeamsState)
+  }
+)
+
+// Track IDs của teams có thay đổi
+export const modifiedTeamIdsAtom = atom<Set<string>>(new Set<string>())
 
 export const appsState = atom(async () => {
   const data = await requestWithFallback<SuiteApp[]>('/apps', [])

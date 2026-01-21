@@ -36,7 +36,6 @@ import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authentica
 import { Route as ClerkAuthenticatedUserManagementRouteImport } from './routes/clerk/_authenticated/user-management'
 import { Route as ClerkauthSignUpRouteImport } from './routes/clerk/(auth)/sign-up'
 import { Route as ClerkauthSignInRouteImport } from './routes/clerk/(auth)/sign-in'
-import { Route as AuthenticatedTeamSettingsRouteImport } from './routes/_authenticated/team/settings'
 import { Route as AuthenticatedTeamMembersRouteImport } from './routes/_authenticated/team/members'
 import { Route as AuthenticatedSettingsWebhooksRouteImport } from './routes/_authenticated/settings/webhooks'
 import { Route as AuthenticatedSettingsApikeysRouteImport } from './routes/_authenticated/settings/apikeys'
@@ -179,12 +178,6 @@ const ClerkauthSignInRoute = ClerkauthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => ClerkauthRouteRoute,
 } as any)
-const AuthenticatedTeamSettingsRoute =
-  AuthenticatedTeamSettingsRouteImport.update({
-    id: '/team/settings',
-    path: '/team/settings',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedTeamMembersRoute =
   AuthenticatedTeamMembersRouteImport.update({
     id: '/team/members',
@@ -222,7 +215,6 @@ export interface FileRoutesByFullPath {
   '/settings/apikeys': typeof AuthenticatedSettingsApikeysRoute
   '/settings/webhooks': typeof AuthenticatedSettingsWebhooksRoute
   '/team/members': typeof AuthenticatedTeamMembersRoute
-  '/team/settings': typeof AuthenticatedTeamSettingsRoute
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
@@ -251,7 +243,6 @@ export interface FileRoutesByTo {
   '/settings/apikeys': typeof AuthenticatedSettingsApikeysRoute
   '/settings/webhooks': typeof AuthenticatedSettingsWebhooksRoute
   '/team/members': typeof AuthenticatedTeamMembersRoute
-  '/team/settings': typeof AuthenticatedTeamSettingsRoute
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
@@ -285,7 +276,6 @@ export interface FileRoutesById {
   '/_authenticated/settings/apikeys': typeof AuthenticatedSettingsApikeysRoute
   '/_authenticated/settings/webhooks': typeof AuthenticatedSettingsWebhooksRoute
   '/_authenticated/team/members': typeof AuthenticatedTeamMembersRoute
-  '/_authenticated/team/settings': typeof AuthenticatedTeamSettingsRoute
   '/clerk/(auth)/sign-in': typeof ClerkauthSignInRoute
   '/clerk/(auth)/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/_authenticated/user-management': typeof ClerkAuthenticatedUserManagementRoute
@@ -318,7 +308,6 @@ export interface FileRouteTypes {
     | '/settings/apikeys'
     | '/settings/webhooks'
     | '/team/members'
-    | '/team/settings'
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
@@ -347,7 +336,6 @@ export interface FileRouteTypes {
     | '/settings/apikeys'
     | '/settings/webhooks'
     | '/team/members'
-    | '/team/settings'
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
@@ -380,7 +368,6 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/apikeys'
     | '/_authenticated/settings/webhooks'
     | '/_authenticated/team/members'
-    | '/_authenticated/team/settings'
     | '/clerk/(auth)/sign-in'
     | '/clerk/(auth)/sign-up'
     | '/clerk/_authenticated/user-management'
@@ -600,13 +587,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClerkauthSignInRouteImport
       parentRoute: typeof ClerkauthRouteRoute
     }
-    '/_authenticated/team/settings': {
-      id: '/_authenticated/team/settings'
-      path: '/team/settings'
-      fullPath: '/team/settings'
-      preLoaderRoute: typeof AuthenticatedTeamSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/team/members': {
       id: '/_authenticated/team/members'
       path: '/team/members'
@@ -653,7 +633,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedTeamMembersRoute: typeof AuthenticatedTeamMembersRoute
-  AuthenticatedTeamSettingsRoute: typeof AuthenticatedTeamSettingsRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedBillingIndexRoute: typeof AuthenticatedBillingIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
@@ -667,7 +646,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedTeamMembersRoute: AuthenticatedTeamMembersRoute,
-  AuthenticatedTeamSettingsRoute: AuthenticatedTeamSettingsRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedBillingIndexRoute: AuthenticatedBillingIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
