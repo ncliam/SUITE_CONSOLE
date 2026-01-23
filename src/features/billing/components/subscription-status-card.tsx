@@ -11,7 +11,7 @@ export function SubscriptionStatusCard() {
   const { data: pricingList } = useAppPricing()
 
   const activeSubscriptions = subscriptions?.filter(
-    s => s.status === 'active' || s.status === 'trial'
+    s => s.status === 'active' || s.status === 'registered'
   )
 
   if (!activeSubscriptions || activeSubscriptions.length === 0) {
@@ -51,14 +51,16 @@ export function SubscriptionStatusCard() {
                 </p>
                 <p className="text-sm text-muted-foreground">{pricing?.description}</p>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Chu kỳ thanh toán</p>
-                <p className="font-medium">
-                  {format(new Date(subscription.currentPeriodStart), 'dd/MM/yyyy', { locale: vi })}
-                  {' - '}
-                  {format(new Date(subscription.currentPeriodEnd), 'dd/MM/yyyy', { locale: vi })}
-                </p>
-              </div>
+              {subscription.currentPeriodStart && subscription.currentPeriodEnd && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Chu kỳ thanh toán</p>
+                  <p className="font-medium">
+                    {format(new Date(subscription.currentPeriodStart), 'dd/MM/yyyy', { locale: vi })}
+                    {' - '}
+                    {format(new Date(subscription.currentPeriodEnd), 'dd/MM/yyyy', { locale: vi })}
+                  </p>
+                </div>
+              )}
               <div className="flex gap-2 pt-2">
                 <Button variant="outline" size="sm" className="flex-1">
                   Hủy subscription
