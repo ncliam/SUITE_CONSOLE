@@ -1,4 +1,5 @@
 import { resetAuthState } from '@/stores/authStore'
+import Cookies from 'js-cookie'
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -10,25 +11,16 @@ const mockUrls = import.meta.glob<{ default: string }>("../mock/*.json", {
 function getAccessTokenFromCookie(): string | undefined {
   if (typeof document === 'undefined') return undefined
 
-  const cookies = document.cookie.split(';').map((c) => c.trim())
-  for (const cookie of cookies) {
-    if (!cookie) continue
-    const [k, ...vParts] = cookie.split('=')
-    if (k === 'access_token') {
-      const v = vParts.join('=') // Join back in case token contains '='
-      const decoded = decodeURIComponent(v || '')
+  const token = Cookies.get('access_token')
 
-      if (import.meta.env.DEV) {
-        // eslint-disable-next-line no-console
-        console.log('[Request] Cookie value (raw):', v.substring(0, 50) + '...')
-        // eslint-disable-next-line no-console
-        console.log('[Request] Cookie value (decoded):', decoded.substring(0, 50) + '...')
-      }
-
-      return decoded
-    }
+  if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
+    console.log('[Request] Token from js-cookie:', token ? `length: ${token.length}` : 'not found')
+    // eslint-disable-next-line no-console
+    console.log('[Request] All cookies:', document.cookie.substring(0, 100) + '...')
   }
-  return undefined
+
+  return token
 }
 
 export async function request<T>(

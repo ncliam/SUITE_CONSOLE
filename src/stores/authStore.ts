@@ -59,7 +59,7 @@ export const signInWithGoogle = async (
 
   // Save to localStorage and Cookies
   localStorage.setItem('auth_user', JSON.stringify(authUser))
-  Cookies.set(ACCESS_TOKEN, token)
+  Cookies.set(ACCESS_TOKEN, token, { sameSite: 'lax', path: '/' })
 
   // Debug: Log token info
   if (import.meta.env.DEV) {

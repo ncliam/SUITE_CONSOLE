@@ -119,20 +119,21 @@ export function AppSubscriptionCard({
               </p>
             )}
             {subscription.status === 'active' && (
-              <Button variant="outline" className="w-full" onClick={onAccess}>
+              <Button size="sm" variant="outline" className="w-full" onClick={onAccess}>
                 Truy cập
               </Button>
             )}
           </div>
         ) : (
           <Button
+            size="sm"
             className="w-full"
             onClick={handleSubscribe}
             disabled={!isTeamVerified || !activeTeam || isSubscribing}
           >
             {isSubscribing ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 h-3 w-3 animate-spin" />
                 Đang đăng ký...
               </>
             ) : (

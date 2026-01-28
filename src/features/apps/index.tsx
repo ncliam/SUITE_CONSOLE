@@ -26,7 +26,7 @@ import { useCreateSubscription } from '@/hooks/use-app-subscription'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
-import { AlertCircle, Loader2 } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 
 const appText = new Map<string, string>([
   ['all', 'All Apps'],
@@ -42,6 +42,7 @@ export default function Apps() {
   const createSubscription = useCreateSubscription()
   const [sort, setSort] = useState('ascending')
   const [searchTerm, setSearchTerm] = useState('')
+  const [subscribingAppId, setSubscribingAppId] = useState<string | null>(null)
 
   // Check for invitation acceptance redirect
   useEffect(() => {
@@ -78,6 +79,8 @@ export default function Apps() {
       return
     }
 
+    setSubscribingAppId(appId)
+
     try {
       await createSubscription.mutateAsync({
         team_id: activeTeam.id,
@@ -90,6 +93,8 @@ export default function Apps() {
       toast.error('Đăng ký thất bại', {
         description: error.message || 'Có lỗi xảy ra khi đăng ký app',
       })
+    } finally {
+      setSubscribingAppId(null)
     }
   }
 
@@ -179,7 +184,7 @@ export default function Apps() {
                     appLogo={app.logo}
                     onSubscribe={() => handleSubscribe(app.id, app.name)}
                     onAccess={() => handleAccess(app.code)}
-                    isSubscribing={createSubscription.isPending}
+                    isSubscribing={subscribingAppId === app.id}
                   />
                 </li>
               ))}
