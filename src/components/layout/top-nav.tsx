@@ -31,9 +31,9 @@ export function TopNav() {
 
   return (
     <div className='flex items-center space-x-2 text-sm'>
-      {/* Root: Active App Name (clickable to go back to /apps) */}
+      {/* Root: Active App Name (clickable to go to settings) */}
       <Link
-        to='/dashboard'
+        to='/settings'
         className='font-semibold text-foreground hover:text-primary transition-colors cursor-pointer'
       >
         {activeApp?.name || 'Apps'}

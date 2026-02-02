@@ -29,7 +29,12 @@ export function AppSubscriptionCard({
 }: AppSubscriptionCardProps) {
   const { data: pricingList } = useAppPricing()
   const { isSubscribed, subscription } = useAppSubscriptionStatus(appId)
-  const { data: activeTeam } = useActiveTeam()
+  const { data: activeTeam, isOwner, role } = useActiveTeam()
+
+  // Chỉ owner mới được đăng ký app
+  const canSubscribe = isOwner
+  // Chỉ owner hoặc admin mới được truy cập app
+  const canAccess = role === 'owner' || role === 'admin'
 
   const pricing = pricingList?.find(p => p.appCode === appCode)
   const [imgError, setImgError] = useState(false)
@@ -102,13 +107,13 @@ export function AppSubscriptionCard({
                 Cập nhật lúc: {subscription.updated_at}
               </p>
             )}
-            {subscription.status === 'active' && (
+            {subscription.status === 'active' && canAccess && (
               <Button size="sm" variant="outline" className="w-full" onClick={onAccess}>
                 Truy cập
               </Button>
             )}
           </div>
-        ) : (
+        ) : canSubscribe ? (
           <Button
             size="sm"
             className="w-full"
@@ -124,6 +129,10 @@ export function AppSubscriptionCard({
               'Đăng ký ngay'
             )}
           </Button>
+        ) : (
+          <p className="text-sm text-muted-foreground italic">
+            Không có quyền đăng ký ứng dụng cho team này
+          </p>
         )}
       </CardContent>
     </Card>

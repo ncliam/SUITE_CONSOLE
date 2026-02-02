@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { ChevronsUpDown, Check, Plus, Pencil, Building2, Loader2 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -19,13 +19,15 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useAtom } from 'jotai'
 import { activeTeamIdAtom } from '@/stores/applicationStore'
 import { useTeams, useCreateTeam, useUpdateTeam } from '@/hooks/use-team'
+import { useInvitations } from '@/hooks/use-invitations'
 import { TeamDialog } from '@/components/team-dialog'
 import type { Team } from '@/types/team'
 import { toast } from 'sonner'
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
-  const { data: teams, isLoading } = useTeams()
+  const { data: ownedTeams, isLoading: isLoadingTeams } = useTeams()
+  const { data: invitations, isLoading: isLoadingInvitations } = useInvitations()
   const [activeTeamId, setActiveTeamId] = useAtom(activeTeamIdAtom)
 
   const createTeam = useCreateTeam()
@@ -34,7 +36,26 @@ export function TeamSwitcher() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingTeam, setEditingTeam] = useState<Team | null>(null)
 
-  const teamArray = Array.isArray(teams) ? teams : []
+  // Separate owned teams and member teams (from accepted invitations)
+  const { ownedTeamsList, memberTeamsList, allTeams } = useMemo(() => {
+    const owned = Array.isArray(ownedTeams) ? ownedTeams : []
+    const ownedIds = new Set(owned.map((t) => t.id))
+
+    // Get teams from active invitations (excluding owned teams)
+    const invs = Array.isArray(invitations) ? invitations : []
+    const memberTeams = invs
+      .filter((inv) => inv.status === 'active' && inv.team && !ownedIds.has(inv.team.id))
+      .map((inv) => inv.team as Team)
+
+    return {
+      ownedTeamsList: owned,
+      memberTeamsList: memberTeams,
+      allTeams: [...owned, ...memberTeams],
+    }
+  }, [ownedTeams, invitations])
+
+  const isLoading = isLoadingTeams || isLoadingInvitations
+  const teamArray = allTeams
   const activeTeam = teamArray.find((t: Team) => t.id === activeTeamId) ?? teamArray[0]
 
   // Tự động chọn team đầu tiên nếu chưa có active team hoặc team hiện tại không hợp lệ
@@ -157,29 +178,59 @@ export function TeamSwitcher() {
               side={isMobile ? 'bottom' : 'right'}
               sideOffset={4}
             >
-              <DropdownMenuLabel className='text-muted-foreground text-xs'>
-                Teams
-              </DropdownMenuLabel>
-              {teamArray.map((team: Team, index: number) => (
-                <DropdownMenuItem
-                  key={team.id}
-                  onClick={() => handleSwitchTeam(team)}
-                  className='gap-2 p-2'
-                >
-                  <div className='flex size-6 items-center justify-center rounded-sm border'>
-                    <span className='text-sm font-medium'>{team.name?.charAt(0) ?? 'T'}</span>
-                  </div>
-                  <span className='flex-1'>{team.name}</span>
-                  {activeTeamId === team.id && <Check className='h-4 w-4' />}
-                  <button
-                    onClick={(e) => handleEditTeam(team, e)}
-                    className='p-1 hover:bg-accent rounded'
-                  >
-                    <Pencil className='h-3 w-3 text-muted-foreground' />
-                  </button>
-                  <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              ))}
+              {/* Owned Teams Section */}
+              {ownedTeamsList.length > 0 && (
+                <>
+                  <DropdownMenuLabel className='text-muted-foreground text-xs'>
+                    Team của bạn
+                  </DropdownMenuLabel>
+                  {ownedTeamsList.map((team: Team, index: number) => (
+                    <DropdownMenuItem
+                      key={team.id}
+                      onClick={() => handleSwitchTeam(team)}
+                      className='gap-2 p-2'
+                    >
+                      <div className='flex size-6 items-center justify-center rounded-sm border'>
+                        <span className='text-sm font-medium'>{team.name?.charAt(0) ?? 'T'}</span>
+                      </div>
+                      <span className='flex-1'>{team.name}</span>
+                      {activeTeamId === team.id && <Check className='h-4 w-4' />}
+                      <button
+                        onClick={(e) => handleEditTeam(team, e)}
+                        className='p-1 hover:bg-accent rounded'
+                      >
+                        <Pencil className='h-3 w-3 text-muted-foreground' />
+                      </button>
+                      <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  ))}
+                </>
+              )}
+
+              {/* Member Teams Section (from accepted invitations) */}
+              {memberTeamsList.length > 0 && (
+                <>
+                  {ownedTeamsList.length > 0 && <DropdownMenuSeparator />}
+                  <DropdownMenuLabel className='text-muted-foreground text-xs'>
+                    Team tham gia
+                  </DropdownMenuLabel>
+                  {memberTeamsList.map((team: Team, index: number) => (
+                    <DropdownMenuItem
+                      key={team.id}
+                      onClick={() => handleSwitchTeam(team)}
+                      className='gap-2 p-2'
+                    >
+                      <div className='flex size-6 items-center justify-center rounded-sm border'>
+                        <span className='text-sm font-medium'>{team.name?.charAt(0) ?? 'T'}</span>
+                      </div>
+                      <span className='flex-1'>{team.name}</span>
+                      {activeTeamId === team.id && <Check className='h-4 w-4' />}
+                      <DropdownMenuShortcut>⌘{ownedTeamsList.length + index + 1}</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  ))}
+                </>
+              )}
+
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleAddTeam} className='gap-2 p-2'>
                 <div className='bg-background flex size-6 items-center justify-center rounded-md border'>

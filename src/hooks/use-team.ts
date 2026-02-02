@@ -5,6 +5,8 @@ import { request, requestWithPost, requestWithPatch, requestWithDelete } from '@
 import type { Team, TeamMember } from '@/types/team'
 import { useTeamSubscriptions } from './use-app-subscription'
 
+export type TeamRole = 'owner' | 'admin' | 'member' | null
+
 // Get all teams for current user
 export function useTeams() {
   return useQuery({
@@ -48,18 +50,47 @@ export function useUpdateTeam() {
   })
 }
 
-// Get active team
+// Get active team (from owned teams or accepted invitations)
 export function useActiveTeam() {
   const activeTeamId = useAtomValue(activeTeamIdAtom)
 
-  return useQuery({
+  const query = useQuery({
     queryKey: ['team', activeTeamId],
     queryFn: async () => {
-      const teams = await request<Team[]>('/teams')
-      return teams.find(t => t.id === activeTeamId) ?? null
+      const [teams, invitations] = await Promise.all([
+        request<Team[]>('/teams'),
+        request<{ id: string; status: string; role: string; team?: Team }[]>('/invitations'),
+      ])
+
+      // Find in owned teams first
+      const ownedTeam = teams.find(t => t.id === activeTeamId)
+      if (ownedTeam) {
+        return { team: ownedTeam, role: 'owner' as TeamRole, isOwner: true }
+      }
+
+      // Find in active invitations
+      const invitation = invitations.find(
+        inv => inv.status === 'active' && inv.team?.id === activeTeamId
+      )
+      if (invitation?.team) {
+        return {
+          team: invitation.team,
+          role: invitation.role as TeamRole,
+          isOwner: false,
+        }
+      }
+
+      return { team: null, role: null, isOwner: false }
     },
     enabled: !!activeTeamId,
   })
+
+  return {
+    ...query,
+    data: query.data?.team ?? null,
+    role: query.data?.role ?? null,
+    isOwner: query.data?.isOwner ?? false,
+  }
 }
 
 // Get team members by subscription

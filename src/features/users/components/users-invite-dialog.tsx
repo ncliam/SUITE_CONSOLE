@@ -124,10 +124,12 @@ export function UsersInviteDialog({ open, onOpenChange }: Props) {
                     defaultValue={field.value}
                     onValueChange={field.onChange}
                     placeholder='Select a role'
-                    items={userTypes.map(({ label, value }) => ({
-                      label,
-                      value,
-                    }))}
+                    items={userTypes
+                      .filter(({ value }) => value !== 'owner')
+                      .map(({ label, value }) => ({
+                        label,
+                        value,
+                      }))}
                   />
                   <FormMessage />
                 </FormItem>
