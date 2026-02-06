@@ -3,10 +3,10 @@ import { UserAuthForm } from './components/user-auth-form'
 
 export default function SignIn2() {
   return (
-    <div className='relative container grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
-      <div className='bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-r'>
-        <div className='absolute inset-0 bg-zinc-900' />
-        <div className='relative z-20 flex items-center text-lg font-medium'>
+    <div className='relative flex h-svh flex-col lg:grid lg:grid-cols-2'>
+      {/* Branding panel - half screen on mobile, left column on desktop */}
+      <div className='relative flex h-[50svh] flex-col items-center justify-center bg-zinc-900 px-6 py-6 text-white lg:h-full lg:px-10 lg:py-10 lg:dark:border-r'>
+        <div className='relative z-20 flex w-full items-center text-lg font-medium lg:absolute lg:left-10 lg:top-10 lg:w-auto'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 24 24'
@@ -24,42 +24,42 @@ export default function SignIn2() {
 
         <img
           src={ViteLogo}
-          className='relative m-auto'
-          width={301}
-          height={60}
+          className='relative z-20 my-auto w-[100px] sm:w-[150px] lg:w-[301px]'
           alt='Vite'
         />
 
-        <div className='relative z-20 mt-auto'>
-          <blockquote className='space-y-2'>
-            <p className='text-lg'>
-              The best lightweight toolset for your ERP
+        <div className='relative z-20'>
+          <blockquote className='space-y-1 text-center lg:space-y-2 lg:text-left'>
+            <p className='text-sm sm:text-base lg:text-lg'>
+              Cung cấp bộ công cụ bổ trợ cho ERP của bạn
             </p>
-            <footer className='text-sm'>Cloudenterprise Vietnam</footer>
+            <footer className='text-xs sm:text-sm'>Cloud Enterprise Vietnam</footer>
           </blockquote>
         </div>
       </div>
-      <div className='lg:p-8'>
-        <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]'>
+
+      {/* Form panel - half screen on mobile, right column on desktop */}
+      <div className='flex h-[50svh] items-center justify-center p-6 lg:h-full lg:p-8'>
+        <div className='flex w-full max-w-[350px] flex-col justify-center space-y-2'>
           <div className='flex flex-col space-y-2 text-left'>
             <h1 className='text-2xl font-semibold tracking-tight text-center'>Login</h1>
             <p className='text-muted-foreground px-8 text-center text-sm'>
-            By clicking login, you agree to our{' '}
-            <a
-              href='/terms'
-              className='hover:text-primary underline underline-offset-4'
-            >
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a
-              href='/privacy'
-              className='hover:text-primary underline underline-offset-4'
-            >
-              Privacy Policy
-            </a>
-            .
-          </p>
+              Khi ấn đăng nhập, bạn đã đồng ý với {' '}
+              <a
+                href='/terms'
+                className='hover:text-primary underline underline-offset-4'
+              >
+                Điều khoản dịch vụ
+              </a>{' '}
+              và{' '}
+              <a
+                href='/privacy'
+                className='hover:text-primary underline underline-offset-4'
+              >
+                Chính sách bảo mật
+              </a>
+              .
+            </p>
           </div>
           <UserAuthForm />
         </div>

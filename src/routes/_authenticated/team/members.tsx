@@ -2,7 +2,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { MemberList } from '@/features/team/components/member-list'
 import { InviteMemberDialog } from '@/features/team/components/invite-member-dialog'
-import { AppSelector } from '@/components/app-selector'
+import { Header } from '@/components/layout/header'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { ThemeSwitch } from '@/components/theme-switch'
 import { useActiveTeam } from '@/hooks/use-team'
 import { Button } from '@/components/ui/button'
 import { UserPlus, AlertCircle } from 'lucide-react'
@@ -12,7 +14,14 @@ function TeamMembersPage() {
   const { data: activeTeam } = useActiveTeam()
 
   return (
-    <div className="flex h-full flex-1 flex-col gap-4 p-4">
+    <>
+      <Header>
+        <div className='ml-auto flex items-center gap-4'>
+          <ThemeSwitch />
+          <ProfileDropdown />
+        </div>
+      </Header>
+      <div className="flex h-full flex-1 flex-col gap-4 p-4">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Thành viên</h1>
@@ -25,7 +34,6 @@ function TeamMembersPage() {
             <UserPlus className="h-4 w-4 mr-2" />
             Mời thành viên
           </Button>
-          <AppSelector />
         </div>
       </div>
 
@@ -40,6 +48,7 @@ function TeamMembersPage() {
 
       <InviteMemberDialog open={inviteOpen} onOpenChange={setInviteOpen} />
     </div>
+    </>
   )
 }
 

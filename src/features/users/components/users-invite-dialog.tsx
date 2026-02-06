@@ -84,10 +84,10 @@ export function UsersInviteDialog({ open, onOpenChange }: Props) {
       <DialogContent className='sm:max-w-md'>
         <DialogHeader className='text-left'>
           <DialogTitle className='flex items-center gap-2'>
-            <IconMailPlus /> Invite User
+            <IconMailPlus /> Gửi lời mời
           </DialogTitle>
           <DialogDescription>
-            Invite new user to join your team. They can accept the invitation from their Invitations page.
+            Mời thành viên tham gia nhóm của bạn. Họ có thể chấp thuận lời mời từ mục "Tham gia nhóm".
           </DialogDescription>
         </DialogHeader>
 
@@ -119,11 +119,11 @@ export function UsersInviteDialog({ open, onOpenChange }: Props) {
               name='role'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel>Vai trò</FormLabel>
                   <SelectDropdown
                     defaultValue={field.value}
                     onValueChange={field.onChange}
-                    placeholder='Select a role'
+                    placeholder='Chọn vai trò'
                     items={userTypes
                       .filter(({ value }) => value !== 'owner')
                       .map(({ label, value }) => ({
@@ -139,10 +139,10 @@ export function UsersInviteDialog({ open, onOpenChange }: Props) {
         </Form>
         <DialogFooter className='gap-y-2'>
           <DialogClose asChild>
-            <Button variant='outline'>Cancel</Button>
+            <Button variant='outline'>Hủy bỏ</Button>
           </DialogClose>
           <Button type='submit' form='user-invite-form' disabled={isInviting}>
-            {isInviting ? 'Inviting...' : 'Invite'} <IconSend />
+            {isInviting ? 'đang gửi...' : 'Gửi lời mời'} <IconSend />
           </Button>
         </DialogFooter>
       </DialogContent>

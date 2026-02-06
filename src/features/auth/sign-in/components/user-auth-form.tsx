@@ -28,7 +28,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('Google sign-in failed', err)
-      toast.error('Sign in with Google failed')
+      toast.error('Đăng nhập Google thất bại')
     } finally {
       setIsLoading(false)
     }
@@ -43,7 +43,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         className='w-full'
       >
         <IconBrandGoogle className='h-5 w-5 mr-2' />
-        {isLoading ? 'Signing in...' : 'Sign in with Google'}
+        {isLoading ? 'Đăng đăng nhập...' : 'Đăng nhập bằng Google'}
       </Button>
     </div>
   )

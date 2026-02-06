@@ -54,7 +54,7 @@ export function ProfileDropdown() {
                 }
               }}
             >
-          Log out
+          Đăng xuất
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

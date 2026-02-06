@@ -10,9 +10,7 @@ import { Separator } from '@/components/ui/separator'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { AppSelector } from '@/components/app-selector'
 import SidebarNav from './components/sidebar-nav'
 import { TopNav } from '@/components/layout/top-nav'
 
@@ -23,8 +21,6 @@ export default function Settings() {
       <Header>
         <TopNav />
           <div className='ml-auto flex items-center space-x-4'>
-            <Search />
-            <AppSelector />
             <ThemeSwitch />
             <ProfileDropdown />
           </div>
@@ -33,10 +29,10 @@ export default function Settings() {
       <Main fixed>
         <div className='space-y-0.5'>
           <h1 className='text-2xl font-bold tracking-tight md:text-3xl'>
-            Settings
+            Cài đặt
           </h1>
           <p className='text-muted-foreground'>
-            Manage team members and API integration.
+            Thiết lập cài đặt cho ứng dụng.
           </p>
         </div>
         <Separator className='my-4 lg:my-6' />
@@ -55,7 +51,7 @@ export default function Settings() {
 
 const sidebarNavItems = [
   {
-    title: 'Team Members',
+    title: 'Thành viên',
     icon: <IconUser size={18} />,
     href: '/settings',
   },

@@ -24,9 +24,9 @@ export default function Users() {
       <div className='flex-1 w-full flex flex-col'>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Team Members</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>Thành viên</h2>
             <p className='text-muted-foreground'>
-              Manage team members and their roles here.
+              Mời thêm thành viên sử dụng ứng dụng.
             </p>
           </div>
           <UsersPrimaryButtons />

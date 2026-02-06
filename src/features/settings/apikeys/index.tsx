@@ -188,7 +188,7 @@ export default function APIKeys() {
         </div>
         <Button onClick={() => setCreateDialogOpen(true)} disabled={!hasSubscription}>
           <IconPlus className="mr-2 h-4 w-4" />
-          Create API Key
+          Tạo API Key
         </Button>
       </div>
 
@@ -280,12 +280,8 @@ export default function APIKeys() {
           <Card>
             <CardContent className="flex flex-col items-center justify-center h-48 text-center">
               <IconKey className="h-10 w-10 text-muted-foreground mb-4" />
-              <p className="text-muted-foreground">No API keys yet</p>
-              <p className="text-sm text-muted-foreground mb-4">Create your first API key to get started</p>
-              <Button onClick={() => setCreateDialogOpen(true)}>
-                <IconPlus className="mr-2 h-4 w-4" />
-                Create API Key
-              </Button>
+              <p className="text-muted-foreground">Chưa có API Key nào</p>
+              <p className="text-sm text-muted-foreground mb-4">Hãy khởi tạo API Key đầu tiên của bạn</p>
             </CardContent>
           </Card>
         )}
@@ -298,15 +294,15 @@ export default function APIKeys() {
       }}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create API Key</DialogTitle>
+            <DialogTitle>Tạo API Key</DialogTitle>
             <DialogDescription>
-              Create a new API key for {subscription?.app_code || activeAppCode}. The key will only be shown once.
+              Tạo API key cho {subscription?.app_code || activeAppCode}. Không hiển thị lại nên hãy lưu thông tin cẩn thận.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleCreateKey}>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="name">Key Name</Label>
+                <Label htmlFor="name">Tên gợi nhớ</Label>
                 <Input
                   id="name"
                   placeholder="e.g., Production Server, Development"
@@ -315,22 +311,22 @@ export default function APIKeys() {
                   autoFocus
                 />
                 <p className="text-sm text-muted-foreground">
-                  Give your key a descriptive name to help you identify it later.
+                  Đăt tên để dễ nhớ về sau.
                 </p>
               </div>
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setCreateDialogOpen(false)}>
-                Cancel
+                Hủy
               </Button>
               <Button type="submit" disabled={createAPIKey.isPending}>
                 {createAPIKey.isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating...
+                    Đang khởi tạo...
                   </>
                 ) : (
-                  'Create Key'
+                  'Tạo khóa mới'
                 )}
               </Button>
             </DialogFooter>
@@ -342,9 +338,9 @@ export default function APIKeys() {
       <Dialog open={!!createdKey} onOpenChange={() => setCreatedKey(null)}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>API Key Created</DialogTitle>
+            <DialogTitle>Tạo thành công API Key</DialogTitle>
             <DialogDescription>
-              Your new API key "{createdKey?.name}" has been created successfully.
+              API key mới"{createdKey?.name}" đã được tạo thành công.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">

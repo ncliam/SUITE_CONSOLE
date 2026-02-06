@@ -17,17 +17,17 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { AppSelector } from '@/components/app-selector'
 import { AppSubscriptionCard } from './components/app-subscription-card'
-import { loadableAppsState, savedAppState } from '@/stores/applicationStore'
-import { useActiveTeam } from '@/hooks/use-team'
+import { loadableAppsState, savedAppState, activeTeamIdAtom } from '@/stores/applicationStore'
+import { useActiveTeam, useTeams } from '@/hooks/use-team'
+import { useInvitations } from '@/hooks/use-invitations'
 import { useCreateSubscription } from '@/hooks/use-app-subscription'
 import { useAtom, useSetAtom } from 'jotai'
 import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Building2 } from 'lucide-react'
+import type { Team } from '@/types/team'
 
 const appText = new Map<string, string>([
   ['all', 'All Apps'],
@@ -38,12 +38,26 @@ const appText = new Map<string, string>([
 export default function Apps() {
   const [appsLoadable] = useAtom(loadableAppsState)
   const setActiveApp = useSetAtom(savedAppState)
+  const setActiveTeamId = useSetAtom(activeTeamIdAtom)
   const { data: activeTeam, isLoading: isTeamLoading } = useActiveTeam()
+  const { data: ownedTeams } = useTeams()
+  const { data: invitations } = useInvitations()
   const navigate = useNavigate()
   const createSubscription = useCreateSubscription()
   const [sort, setSort] = useState('ascending')
   const [searchTerm, setSearchTerm] = useState('')
   const [subscribingAppId, setSubscribingAppId] = useState<string | null>(null)
+
+  // Build team list from owned + member teams
+  const allTeams = (() => {
+    const owned = Array.isArray(ownedTeams) ? ownedTeams : []
+    const ownedIds = new Set(owned.map((t) => t.id))
+    const invs = Array.isArray(invitations) ? invitations : []
+    const memberTeams = invs
+      .filter((inv: any) => inv.status === 'active' && inv.team && !ownedIds.has(inv.team.id))
+      .map((inv: any) => inv.team as Team)
+    return [...owned, ...memberTeams]
+  })()
 
   const isLoading = appsLoadable.state === 'loading' || isTeamLoading
   const apps = appsLoadable.state === 'hasData' ? appsLoadable.data : []
@@ -119,9 +133,7 @@ export default function Apps() {
     <>
       {/* ===== Top Heading ===== */}
       <Header>
-        <Search />
         <div className='ml-auto flex items-center gap-4'>
-          <AppSelector />
           <ThemeSwitch />
           <ProfileDropdown />
         </div>
@@ -134,7 +146,7 @@ export default function Apps() {
             Suite Apps
           </h1>
           <p className='text-muted-foreground'>
-            Explore and subscribe to our enterprise apps
+            Hãy khám phá và trải nghiệm các ứng dụng của chúng tôi
           </p>
         </div>
 
@@ -163,16 +175,39 @@ export default function Apps() {
             </ul>
           </>
         ) : !activeTeam ? (
-          <div className="flex items-center gap-2 text-sm text-yellow-600 bg-yellow-50 p-4 rounded-md my-4">
-            <AlertCircle className="h-4 w-4" />
-            <span>Vui lòng chọn team để xem và đăng ký ứng dụng</span>
+          <div className="my-4 space-y-3">
+            <div className="flex items-center gap-2 text-sm text-yellow-600 bg-yellow-50 p-4 rounded-md">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <span>Vui lòng chọn team để xem và đăng ký ứng dụng</span>
+            </div>
+            {allTeams.length > 0 && (
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {allTeams.map((team) => (
+                  <button
+                    key={team.id}
+                    onClick={() => setActiveTeamId(team.id)}
+                    className="flex items-center gap-3 rounded-lg border p-4 text-left transition-colors hover:bg-accent"
+                  >
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                      <Building2 className="size-5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-medium">{team.name}</p>
+                      {team.fullName && (
+                        <p className="truncate text-xs text-muted-foreground">{team.fullName}</p>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <>
             <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
               <div className='flex flex-col gap-4 sm:my-4 sm:flex-row'>
                 <Input
-                  placeholder='Filter apps...'
+                  placeholder='Lọc...'
                   className='h-9 w-40 lg:w-[250px]'
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}

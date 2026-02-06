@@ -10,7 +10,7 @@ export function UsersPrimaryButtons() {
         className='space-x-1'
         onClick={() => setOpen('invite')}
       >
-        <span>Invite Users</span> <IconMailPlus size={18} />
+        <span>Gửi lời mời</span> <IconMailPlus size={18} />
       </Button>
     </div>
   )
