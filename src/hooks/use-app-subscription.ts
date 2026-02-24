@@ -100,6 +100,18 @@ export function useCreateSubscription() {
   })
 }
 
+// Create public invite token for a subscription (server-signed)
+export function useCreatePublicInvite() {
+  return useMutation({
+    mutationFn: async (data: { subscriptionId: string; ttl_seconds: number }) => {
+      return await requestWithPost<{ ttl_seconds: number }, { token: string; expires_at: number }>(
+        `/subscriptions/${data.subscriptionId}/public-invite`,
+        { ttl_seconds: data.ttl_seconds }
+      )
+    },
+  })
+}
+
 // Update subscription status (real API)
 export function useUpdateSubscriptionStatus() {
   const queryClient = useQueryClient()

@@ -38,3 +38,4 @@ export type TeamPermission =
   | 'edit:team'
   | 'subscribe:apps'
   | 'access:apps'
+  | 'manage:integrations'

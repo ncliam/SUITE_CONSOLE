@@ -1,6 +1,8 @@
 import { Outlet } from '@tanstack/react-router'
 import {
+  IconApi,
   IconBrowserCheck,
+  IconDatabase,
   IconNotification,
   IconPalette,
   IconTool,
@@ -59,6 +61,16 @@ const sidebarNavItems = [
     title: 'API Keys',
     icon: <IconTool size={18} />,
     href: '/settings/apikeys',
+  },
+  {
+    title: 'Odoo',
+    icon: <IconDatabase size={18} />,
+    href: '/settings/odoo',
+  },
+  {
+    title: 'Feeding API',
+    icon: <IconApi size={18} />,
+    href: '/settings/feed',
   },
   {
     title: 'Webhooks',

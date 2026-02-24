@@ -2,15 +2,17 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { MemberList } from '@/features/team/components/member-list'
 import { InviteMemberDialog } from '@/features/team/components/invite-member-dialog'
+import { PublicInviteQRDialog } from '@/features/team/components/public-invite-qr-dialog'
 import { Header } from '@/components/layout/header'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { useActiveTeam } from '@/hooks/use-team'
 import { Button } from '@/components/ui/button'
-import { UserPlus, AlertCircle } from 'lucide-react'
+import { UserPlus, QrCode, AlertCircle } from 'lucide-react'
 
 function TeamMembersPage() {
   const [inviteOpen, setInviteOpen] = useState(false)
+  const [qrOpen, setQrOpen] = useState(false)
   const { data: activeTeam } = useActiveTeam()
 
   return (
@@ -30,6 +32,10 @@ function TeamMembersPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={() => setQrOpen(true)} disabled={!activeTeam}>
+            <QrCode className="h-4 w-4 mr-2" />
+            Tạo QR công khai
+          </Button>
           <Button onClick={() => setInviteOpen(true)} disabled={!activeTeam}>
             <UserPlus className="h-4 w-4 mr-2" />
             Mời thành viên
@@ -47,6 +53,7 @@ function TeamMembersPage() {
       )}
 
       <InviteMemberDialog open={inviteOpen} onOpenChange={setInviteOpen} />
+      <PublicInviteQRDialog open={qrOpen} onOpenChange={setQrOpen} />
     </div>
     </>
   )

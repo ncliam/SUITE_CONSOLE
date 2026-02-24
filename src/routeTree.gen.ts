@@ -39,6 +39,8 @@ import { Route as ClerkauthSignUpRouteImport } from './routes/clerk/(auth)/sign-
 import { Route as ClerkauthSignInRouteImport } from './routes/clerk/(auth)/sign-in'
 import { Route as AuthenticatedTeamMembersRouteImport } from './routes/_authenticated/team/members'
 import { Route as AuthenticatedSettingsWebhooksRouteImport } from './routes/_authenticated/settings/webhooks'
+import { Route as AuthenticatedSettingsOdooRouteImport } from './routes/_authenticated/settings/odoo'
+import { Route as AuthenticatedSettingsFeedRouteImport } from './routes/_authenticated/settings/feed'
 import { Route as AuthenticatedSettingsApikeysRouteImport } from './routes/_authenticated/settings/apikeys'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
@@ -197,6 +199,18 @@ const AuthenticatedSettingsWebhooksRoute =
     path: '/webhooks',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedSettingsOdooRoute =
+  AuthenticatedSettingsOdooRouteImport.update({
+    id: '/odoo',
+    path: '/odoo',
+    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+  } as any)
+const AuthenticatedSettingsFeedRoute =
+  AuthenticatedSettingsFeedRouteImport.update({
+    id: '/feed',
+    path: '/feed',
+    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+  } as any)
 const AuthenticatedSettingsApikeysRoute =
   AuthenticatedSettingsApikeysRouteImport.update({
     id: '/apikeys',
@@ -220,6 +234,8 @@ export interface FileRoutesByFullPath {
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
   '/settings/apikeys': typeof AuthenticatedSettingsApikeysRoute
+  '/settings/feed': typeof AuthenticatedSettingsFeedRoute
+  '/settings/odoo': typeof AuthenticatedSettingsOdooRoute
   '/settings/webhooks': typeof AuthenticatedSettingsWebhooksRoute
   '/team/members': typeof AuthenticatedTeamMembersRoute
   '/clerk/sign-in': typeof ClerkauthSignInRoute
@@ -249,6 +265,8 @@ export interface FileRoutesByTo {
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
   '/settings/apikeys': typeof AuthenticatedSettingsApikeysRoute
+  '/settings/feed': typeof AuthenticatedSettingsFeedRoute
+  '/settings/odoo': typeof AuthenticatedSettingsOdooRoute
   '/settings/webhooks': typeof AuthenticatedSettingsWebhooksRoute
   '/team/members': typeof AuthenticatedTeamMembersRoute
   '/clerk/sign-in': typeof ClerkauthSignInRoute
@@ -283,6 +301,8 @@ export interface FileRoutesById {
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/settings/apikeys': typeof AuthenticatedSettingsApikeysRoute
+  '/_authenticated/settings/feed': typeof AuthenticatedSettingsFeedRoute
+  '/_authenticated/settings/odoo': typeof AuthenticatedSettingsOdooRoute
   '/_authenticated/settings/webhooks': typeof AuthenticatedSettingsWebhooksRoute
   '/_authenticated/team/members': typeof AuthenticatedTeamMembersRoute
   '/clerk/(auth)/sign-in': typeof ClerkauthSignInRoute
@@ -316,6 +336,8 @@ export interface FileRouteTypes {
     | '/503'
     | '/'
     | '/settings/apikeys'
+    | '/settings/feed'
+    | '/settings/odoo'
     | '/settings/webhooks'
     | '/team/members'
     | '/clerk/sign-in'
@@ -345,6 +367,8 @@ export interface FileRouteTypes {
     | '/503'
     | '/'
     | '/settings/apikeys'
+    | '/settings/feed'
+    | '/settings/odoo'
     | '/settings/webhooks'
     | '/team/members'
     | '/clerk/sign-in'
@@ -378,6 +402,8 @@ export interface FileRouteTypes {
     | '/(errors)/503'
     | '/_authenticated/'
     | '/_authenticated/settings/apikeys'
+    | '/_authenticated/settings/feed'
+    | '/_authenticated/settings/odoo'
     | '/_authenticated/settings/webhooks'
     | '/_authenticated/team/members'
     | '/clerk/(auth)/sign-in'
@@ -621,6 +647,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsWebhooksRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/settings/odoo': {
+      id: '/_authenticated/settings/odoo'
+      path: '/odoo'
+      fullPath: '/settings/odoo'
+      preLoaderRoute: typeof AuthenticatedSettingsOdooRouteImport
+      parentRoute: typeof AuthenticatedSettingsRouteRoute
+    }
+    '/_authenticated/settings/feed': {
+      id: '/_authenticated/settings/feed'
+      path: '/feed'
+      fullPath: '/settings/feed'
+      preLoaderRoute: typeof AuthenticatedSettingsFeedRouteImport
+      parentRoute: typeof AuthenticatedSettingsRouteRoute
+    }
     '/_authenticated/settings/apikeys': {
       id: '/_authenticated/settings/apikeys'
       path: '/apikeys'
@@ -633,6 +673,8 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedSettingsRouteRouteChildren {
   AuthenticatedSettingsApikeysRoute: typeof AuthenticatedSettingsApikeysRoute
+  AuthenticatedSettingsFeedRoute: typeof AuthenticatedSettingsFeedRoute
+  AuthenticatedSettingsOdooRoute: typeof AuthenticatedSettingsOdooRoute
   AuthenticatedSettingsWebhooksRoute: typeof AuthenticatedSettingsWebhooksRoute
   AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
 }
@@ -640,6 +682,8 @@ interface AuthenticatedSettingsRouteRouteChildren {
 const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteChildren =
   {
     AuthenticatedSettingsApikeysRoute: AuthenticatedSettingsApikeysRoute,
+    AuthenticatedSettingsFeedRoute: AuthenticatedSettingsFeedRoute,
+    AuthenticatedSettingsOdooRoute: AuthenticatedSettingsOdooRoute,
     AuthenticatedSettingsWebhooksRoute: AuthenticatedSettingsWebhooksRoute,
     AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
   }
